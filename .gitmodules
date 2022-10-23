@@ -1,0 +1,3 @@
+[submodule "dependencies/glframework"]
+	path = dependencies/glframework
+	url = https://github.com/LRLVEC/glframework.git
