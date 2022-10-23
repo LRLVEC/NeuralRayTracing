@@ -1,3 +1,6 @@
 [submodule "dependencies/glframework"]
 	path = dependencies/glframework
 	url = https://github.com/LRLVEC/glframework.git
+[submodule "dependencies/tiny-cuda-nn"]
+	path = dependencies/tiny-cuda-nn
+	url = https://github.com/LRLVEC/tiny-cuda-nn.git
