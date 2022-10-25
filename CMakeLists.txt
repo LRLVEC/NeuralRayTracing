@@ -49,6 +49,7 @@ add_subdirectory(dependencies/glframework)
 
 list(APPEND NRT_SOURCES
 	src/sdf.cu
+	dependencies/stbi/stbi_wrapper.cpp
 )
 
 
@@ -57,6 +58,9 @@ set_target_properties(nrt PROPERTIES CUDA_RESOLVE_DEVICE_SYMBOLS ON CUDA_SEPARAB
 get_target_property(TCNN_INCLUDE_DIRECTORIES tiny-cuda-nn INCLUDE_DIRECTORIES)
 target_include_directories(nrt PUBLIC ${TCNN_INCLUDE_DIRECTORIES})
 target_include_directories(nrt PUBLIC ${GLFRAMEWORK_INCLUDE_DIRECTORIES})
+target_include_directories(nrt PUBLIC
+	"dependencies"
+)
 target_link_libraries(nrt PUBLIC tiny-cuda-nn)
 target_link_libraries(nrt PUBLIC ${GLFRAMEWORK_LIBRARIES})
 
