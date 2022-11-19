@@ -4,3 +4,6 @@
 [submodule "dependencies/tiny-cuda-nn"]
 	path = dependencies/tiny-cuda-nn
 	url = https://github.com/LRLVEC/tiny-cuda-nn.git
+[submodule "dependencies/imgui"]
+	path = dependencies/imgui
+	url = https://github.com/LRLVEC/imgui.git

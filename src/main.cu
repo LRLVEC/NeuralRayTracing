@@ -1,6 +1,6 @@
 #include <cstdio>
-#include <_Window.h>
-#include <renderer.h>
+#define _CUDA
+#include <_NBody.h>
 #include <user_interface.h>
 
 int main()

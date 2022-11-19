@@ -16,7 +16,7 @@ endif()
 
 if (MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /D_CRT_SECURE_NO_WARNINGS")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /32")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /32 /W4")
 endif()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -39,14 +39,22 @@ add_subdirectory(dependencies/tiny-cuda-nn)
 
 set(CMAKE_CUDA_ARCHITECTURES ${TCNN_CUDA_ARCHITECTURES})
 
-set(GLFRAMEWORK_BUILD_TESTS OFF CACHE BOOL " " FORCE)
+set(GLFRAMEWORK_BUILD_TESTS ON CACHE BOOL " " FORCE)
 add_subdirectory(dependencies/glframework)
 
 list(APPEND NRT_SOURCES
+	# nrt
 	src/sdf.cu
 	src/renderer.cu
 	src/user_interface.cu
-	# src/temp.cu
+	# imgui
+	dependencies/imgui/imgui.cpp
+	dependencies/imgui/backends/imgui_impl_glfw.cpp
+	dependencies/imgui/backends/imgui_impl_opengl3.cpp
+	dependencies/imgui/imgui_draw.cpp
+	dependencies/imgui/imgui_tables.cpp
+	dependencies/imgui/imgui_widgets.cpp
+	# stbi
 	dependencies/stbi/stbi_wrapper.cpp
 )
 
@@ -59,8 +67,10 @@ target_include_directories(nrt PUBLIC ${GLFRAMEWORK_INCLUDE_DIRECTORIES})
 target_include_directories(nrt PUBLIC
 	"include"
 	"dependencies"
+	"dependencies/imgui"
 )
 target_link_libraries(nrt PUBLIC tiny-cuda-nn)
+target_link_libraries(nrt PUBLIC glframework)
 target_link_libraries(nrt PUBLIC ${GLFRAMEWORK_LIBRARIES})
 
 add_executable(main src/main.cu)
