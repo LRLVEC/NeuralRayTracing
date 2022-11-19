@@ -1,54 +1,39 @@
 #include <cstdio>
+#include <_Window.h>
 #include <renderer.h>
+#include <user_interface.h>
 
 int main()
 {
-	printf("Fuck!\n");
-	OpenGL::OpenGLInit init(4, 5);
-	Window::Window::Data winParameters1
+	try
 	{
-		"NBodyCUDA1",
+		printf("Fuck!\n");
+		Window::Window::Data mainWindowData
 		{
-			{800,800},
-			true,false
-		}
-	};
-	Window::Window::Data winParameters2
-	{
-		"NBodyCUDA2",
+			"Neural Ray Tracing",
+			{{1920, 1080}, /*resizable=*/true, /*fullscreen=*/false}
+		};
+		NRT::UserInterface ui(mainWindowData);
+		OpenGL::NBodyCUDA nBody1(20 * 1, false, String<char>("./"));
+		::printf("Num particles1: %d\n", nBody1.particles.particles.length);
+		ui.bindMainWindow(&nBody1);
+
+		Window::Window::Data smallWindowData
 		{
-			{400,400},
-			true,false
-		}
-	};
-	
+			"Normal",
+			{{400, 400}, /*resizable=*/true, /*fullscreen=*/false}
+		};
+		Window::Window& w = ui.createWindow(smallWindowData);
+		OpenGL::NBodyCUDA nBody2(10 * 1, false, String<char>("./"));
+		::printf("Num particles2: %d\n", nBody2.particles.particles.length);
+		ui.bindWindow(w, &nBody2);
 
-	Window::WindowManager wm(winParameters1);
-	wm.createWindow(winParameters2);
-	wm.windows[0].data.makeCurrent();
-	OpenGL::NBodyCUDA nBody1(20 * 1, false, String<char>("./"));
-	::printf("Num particles1: %d\n", nBody1.particles.particles.length);
-	wm.init(0, &nBody1);
-
-	wm.windows[1].data.makeCurrent();
-	OpenGL::NBodyCUDA nBody2(10 * 1, false, String<char>("./"));
-	::printf("Num particles2: %d\n", nBody2.particles.particles.length);
-	wm.init(1, &nBody2);
-	
-	CUDA::OpenGLDeviceInfo intro;
-	intro.printInfo();
-	init.printRenderer();
-	glfwSwapInterval(0);
-	FPS fps;
-	fps.refresh();
-	while (!wm.close())
-	{
-		wm.pullEvents();
-		wm.render();
-		wm.swapBuffers();
-		fps.refresh();
-		::printf("\r%.2lf    ", fps.fps);
-		//fps.printFPS(1);
+		ui.mainLoop();
+		return 0;
 	}
-	return 0;
+	catch (const std::exception& e)
+	{
+		printf("%s", e.what());
+		return 0;
+	}
 }

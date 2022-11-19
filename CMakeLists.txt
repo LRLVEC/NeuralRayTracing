@@ -45,6 +45,7 @@ add_subdirectory(dependencies/glframework)
 list(APPEND NRT_SOURCES
 	src/sdf.cu
 	src/renderer.cu
+	src/user_interface.cu
 	# src/temp.cu
 	dependencies/stbi/stbi_wrapper.cpp
 )
