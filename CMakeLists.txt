@@ -39,7 +39,7 @@ add_subdirectory(dependencies/tiny-cuda-nn)
 
 set(CMAKE_CUDA_ARCHITECTURES ${TCNN_CUDA_ARCHITECTURES})
 
-set(GLFRAMEWORK_BUILD_TESTS ON CACHE BOOL " " FORCE)
+set(GLFRAMEWORK_BUILD_TESTS OFF CACHE BOOL " " FORCE)
 add_subdirectory(dependencies/glframework)
 
 list(APPEND NRT_SOURCES
