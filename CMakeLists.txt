@@ -42,23 +42,21 @@ set(CMAKE_CUDA_ARCHITECTURES ${TCNN_CUDA_ARCHITECTURES})
 set(GLFRAMEWORK_BUILD_TESTS OFF CACHE BOOL " " FORCE)
 add_subdirectory(dependencies/glframework)
 
-
-# list(APPEND NRT_INCLUDE_DIRECTORIES
-# 	"dependencies/tiny-cuda-nn"
-# )
-
 list(APPEND NRT_SOURCES
 	src/sdf.cu
+	src/renderer.cu
+	# src/temp.cu
 	dependencies/stbi/stbi_wrapper.cpp
 )
-
 
 add_library(nrt STATIC ${NRT_SOURCES})
 set_target_properties(nrt PROPERTIES CUDA_RESOLVE_DEVICE_SYMBOLS ON CUDA_SEPARABLE_COMPILATION ON)
 get_target_property(TCNN_INCLUDE_DIRECTORIES tiny-cuda-nn INCLUDE_DIRECTORIES)
+get_target_property(GLFRAMEWORK_INCLUDE_DIRECTORIES glframework INCLUDE_DIRECTORIES)
 target_include_directories(nrt PUBLIC ${TCNN_INCLUDE_DIRECTORIES})
 target_include_directories(nrt PUBLIC ${GLFRAMEWORK_INCLUDE_DIRECTORIES})
 target_include_directories(nrt PUBLIC
+	"include"
 	"dependencies"
 )
 target_link_libraries(nrt PUBLIC tiny-cuda-nn)
