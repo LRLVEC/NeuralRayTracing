@@ -1,7 +1,7 @@
 #include <cstdio>
 #define _CUDA
 #include <_NBody.h>
-#include <user_interface.h>
+#include <_ImGui.h>
 
 int main()
 {
@@ -13,7 +13,7 @@ int main()
 			"Neural Ray Tracing",
 			{{1920, 1080}, /*resizable=*/true, /*fullscreen=*/false}
 		};
-		NRT::UserInterface ui(mainWindowData);
+		GUI::UserInterface ui(mainWindowData);
 		OpenGL::NBodyCUDA nBody1(20 * 1, false, String<char>("./"));
 		::printf("Num particles1: %d\n", nBody1.particles.particles.length);
 		ui.bindMainWindow(&nBody1);

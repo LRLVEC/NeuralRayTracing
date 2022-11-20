@@ -46,14 +46,6 @@ list(APPEND NRT_SOURCES
 	# nrt
 	src/sdf.cu
 	src/renderer.cu
-	src/user_interface.cu
-	# imgui
-	dependencies/imgui/imgui.cpp
-	dependencies/imgui/backends/imgui_impl_glfw.cpp
-	dependencies/imgui/backends/imgui_impl_opengl3.cpp
-	dependencies/imgui/imgui_draw.cpp
-	dependencies/imgui/imgui_tables.cpp
-	dependencies/imgui/imgui_widgets.cpp
 	# stbi
 	dependencies/stbi/stbi_wrapper.cpp
 )
@@ -65,9 +57,8 @@ get_target_property(GLFRAMEWORK_INCLUDE_DIRECTORIES glframework INCLUDE_DIRECTOR
 target_include_directories(nrt PUBLIC ${TCNN_INCLUDE_DIRECTORIES})
 target_include_directories(nrt PUBLIC ${GLFRAMEWORK_INCLUDE_DIRECTORIES})
 target_include_directories(nrt PUBLIC
-	"include"
-	"dependencies"
-	"dependencies/imgui"
+	"include/"
+	"dependencies/"
 )
 target_link_libraries(nrt PUBLIC tiny-cuda-nn)
 target_link_libraries(nrt PUBLIC glframework)
